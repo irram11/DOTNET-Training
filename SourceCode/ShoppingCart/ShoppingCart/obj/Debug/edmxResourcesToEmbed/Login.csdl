@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingCartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ShoppingCartEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="Authentication" ReturnType="Collection(ShoppingCartModel.Authentication_Result)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ProductSelectAll" ReturnType="Collection(ShoppingCartModel.ProductSelectAll_Result)" />
+    <EntitySet Name="Productids" EntityType="ShoppingCartModel.Productid" />
+    <FunctionImport Name="AddToCart">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="ProductId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CartItem" ReturnType="Collection(ShoppingCartModel.CartItem_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Checkout">
+      <Parameter Name="Userid" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Authentication_Result">
+    <Property Type="Int32" Name="Userid" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="ProductSelectAll_Result">
+    <Property Type="Int32" Name="Productid" Nullable="false" />
+    <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Productprice" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Productimage" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="Productid">
+    <Key>
+      <PropertyRef Name="Productid1" />
+    </Key>
+    <Property Name="Productid1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Productname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Productprice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Productimage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="CartItem_Result">
+    <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Productimage" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Productprice" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+    <Property Type="Int32" Name="Total" Nullable="true" />
+  </ComplexType>
+</Schema>

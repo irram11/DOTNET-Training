@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoppingCartModelStoreContainer" CdmEntityContainer="ShoppingCartEntities">
+    <FunctionImportMapping FunctionImportName="Authentication" FunctionName="ShoppingCartModel.Store.Authentication">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ShoppingCartModel.Authentication_Result">
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductSelectAll" FunctionName="ShoppingCartModel.Store.ProductSelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ShoppingCartModel.ProductSelectAll_Result">
+          <ScalarProperty Name="Productid" ColumnName="Productid" />
+          <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+          <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Productids">
+      <EntityTypeMapping TypeName="ShoppingCartModel.Productid">
+        <MappingFragment StoreEntitySet="Productid">
+          <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+          <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+          <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Productid1" ColumnName="Productid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddToCart" FunctionName="ShoppingCartModel.Store.AddToCart" />
+    <FunctionImportMapping FunctionImportName="CartItem" FunctionName="ShoppingCartModel.Store.CartItem">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ShoppingCartModel.CartItem_Result">
+          <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+          <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Checkout" FunctionName="ShoppingCartModel.Store.Checkout" />
+  </EntityContainerMapping>
+</Mapping>

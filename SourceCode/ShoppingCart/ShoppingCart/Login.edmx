@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShoppingCartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Productid">
+          <Key>
+            <PropertyRef Name="Productid" />
+          </Key>
+          <Property Name="Productid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Productname" Type="varchar" MaxLength="50" />
+          <Property Name="Productprice" Type="varchar" MaxLength="50" />
+          <Property Name="Productimage" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="AddToCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="ProductId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Authentication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CartItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Checkout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProductSelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ShoppingCartModelStoreContainer">
+          <EntitySet Name="Productid" EntityType="Self.Productid" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShoppingCartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShoppingCartEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="Authentication" ReturnType="Collection(ShoppingCartModel.Authentication_Result)">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProductSelectAll" ReturnType="Collection(ShoppingCartModel.ProductSelectAll_Result)" />
+          <EntitySet Name="Productids" EntityType="ShoppingCartModel.Productid" />
+          <FunctionImport Name="AddToCart">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="ProductId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CartItem" ReturnType="Collection(ShoppingCartModel.CartItem_Result)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Checkout">
+            <Parameter Name="Userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Authentication_Result">
+          <Property Type="Int32" Name="Userid" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ProductSelectAll_Result">
+          <Property Type="Int32" Name="Productid" Nullable="false" />
+          <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Productprice" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Productimage" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="Productid">
+          <Key>
+            <PropertyRef Name="Productid1" />
+          </Key>
+          <Property Name="Productid1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Productname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Productprice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Productimage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="CartItem_Result">
+          <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Productimage" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Productprice" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShoppingCartModelStoreContainer" CdmEntityContainer="ShoppingCartEntities" >
+          <FunctionImportMapping FunctionImportName="Authentication" FunctionName="ShoppingCartModel.Store.Authentication">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShoppingCartModel.Authentication_Result">
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProductSelectAll" FunctionName="ShoppingCartModel.Store.ProductSelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShoppingCartModel.ProductSelectAll_Result">
+                <ScalarProperty Name="Productid" ColumnName="Productid" />
+                <ScalarProperty Name="Productname" ColumnName="Productname" />
+                <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+                <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Productids">
+            <EntityTypeMapping TypeName="ShoppingCartModel.Productid">
+              <MappingFragment StoreEntitySet="Productid">
+                <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+                <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+                <ScalarProperty Name="Productname" ColumnName="Productname" />
+                <ScalarProperty Name="Productid1" ColumnName="Productid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddToCart" FunctionName="ShoppingCartModel.Store.AddToCart" />
+          <FunctionImportMapping FunctionImportName="CartItem" FunctionName="ShoppingCartModel.Store.CartItem">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShoppingCartModel.CartItem_Result">
+                <ScalarProperty Name="Productname" ColumnName="Productname" />
+                <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+                <ScalarProperty Name="Productprice" ColumnName="Productprice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Checkout" FunctionName="ShoppingCartModel.Store.Checkout" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
